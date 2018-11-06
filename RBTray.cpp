@@ -85,9 +85,6 @@ static void MinimizeWindowToTray(HWND hwnd) {
 	if (FindInTray(hwnd) == -1) {
 		AddWindowToTray(hwnd);
 	}
-
-	// Hide window
-	ShowWindow(hwnd, SW_HIDE);
 }
 
 static void RemoveFromTray(int i) {
@@ -107,7 +104,6 @@ static void RemoveWindowFromTray(HWND hwnd) {
 }
 
 static void RestoreWindowFromTray(HWND hwnd) {
-	ShowWindow(hwnd, SW_SHOW);
 	SetForegroundWindow(hwnd);
 	RemoveWindowFromTray(hwnd);
 }
@@ -129,7 +125,7 @@ static void CloseWindowFromTray(HWND hwnd) {
 void RefreshWindowInTray(HWND hwnd) {
 	int i = FindInTray(hwnd);
 	if (i == -1) return;
-	if (!IsWindow(hwnd) || IsWindowVisible(hwnd)) {
+	if (!IsWindow(hwnd)) {
 		RemoveWindowFromTray(hwnd);
 	}
 	else {
