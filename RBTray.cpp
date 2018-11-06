@@ -191,7 +191,7 @@ LRESULT CALLBACK HookWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 	case WM_TRAYCMD:
 		switch ((UINT)lParam) {
 		case NIN_SELECT:
-			RestoreWindowFromTray(_hwndItems[wParam]);
+			SetForegroundWindow(_hwndItems[wParam]);
 			break;
 		case WM_CONTEXTMENU:
 			_hwndForMenu = _hwndItems[wParam];
