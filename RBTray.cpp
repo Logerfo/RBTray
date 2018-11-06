@@ -153,7 +153,6 @@ void ExecuteMenu() {
 		MessageBox(NULL, L"Error creating menu.", L"RBTray", MB_OK | MB_ICONERROR);
 		return;
 	}
-	AppendMenu(hMenu, MF_STRING, IDM_ABOUT, L"About RBTray");
 	AppendMenu(hMenu, MF_STRING, IDM_EXIT, L"Exit RBTray");
 	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL); //--------------
 	AppendMenu(hMenu, MF_STRING, IDM_CLOSE, L"Close Window");
@@ -198,9 +197,6 @@ LRESULT CALLBACK HookWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 			break;
 		case IDM_CLOSE:
 			CloseWindowFromTray(_hwndForMenu);
-			break;
-		case IDM_ABOUT:
-			DialogBox(_hInstance, MAKEINTRESOURCE(IDD_ABOUT), _hwndHook, (DLGPROC)AboutDlgProc);
 			break;
 		case IDM_EXIT:
 			SendMessage(_hwndHook, WM_DESTROY, 0, 0);
