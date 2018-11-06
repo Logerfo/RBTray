@@ -156,7 +156,7 @@ void ExecuteMenu() {
 	AppendMenu(hMenu, MF_STRING, IDM_EXIT, L"Exit RBTray");
 	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL); //--------------
 	AppendMenu(hMenu, MF_STRING, IDM_CLOSE, L"Close Window");
-	AppendMenu(hMenu, MF_STRING, IDM_RESTORE, L"Restore Window");
+	AppendMenu(hMenu, MF_STRING, IDM_RESTORE, L"Remove Window");
 
 	GetCursorPos(&point);
 	SetForegroundWindow(_hwndHook);
