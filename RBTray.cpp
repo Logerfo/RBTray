@@ -1,22 +1,22 @@
 // ****************************************************************************
-// 
+//
 // RBTray
 // Copyright (C) 1998-2010  Nikolay Redko, J.D. Purcell
-// 
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-// 
+//
 // ****************************************************************************
 
 #include <windows.h>
@@ -52,14 +52,14 @@ HICON GetWindowIcon(HWND hwnd) {
 static void AddToTray(int i) {
 	NOTIFYICONDATA nid;
 	ZeroMemory(&nid, sizeof(nid));
-	nid.cbSize           = NOTIFYICONDATA_V2_SIZE;
-	nid.hWnd             = _hwndHook;
-	nid.uID              = (UINT)i;
-	nid.uFlags           = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+	nid.cbSize = NOTIFYICONDATA_V2_SIZE;
+	nid.hWnd = _hwndHook;
+	nid.uID = (UINT)i;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
 	nid.uCallbackMessage = WM_TRAYCMD;
-	nid.hIcon            = GetWindowIcon(_hwndItems[i]);
+	nid.hIcon = GetWindowIcon(_hwndItems[i]);
 	GetWindowText(_hwndItems[i], nid.szTip, sizeof(nid.szTip) / sizeof(nid.szTip[0]));
-	nid.uVersion         = NOTIFYICON_VERSION;
+	nid.uVersion = NOTIFYICON_VERSION;
 	Shell_NotifyIcon(NIM_ADD, &nid);
 	Shell_NotifyIcon(NIM_SETVERSION, &nid);
 }
@@ -94,8 +94,8 @@ static void RemoveFromTray(int i) {
 	NOTIFYICONDATA nid;
 	ZeroMemory(&nid, sizeof(nid));
 	nid.cbSize = NOTIFYICONDATA_V2_SIZE;
-	nid.hWnd   = _hwndHook;
-	nid.uID    = (UINT)i;
+	nid.hWnd = _hwndHook;
+	nid.uID = (UINT)i;
 	Shell_NotifyIcon(NIM_DELETE, &nid);
 }
 
@@ -136,8 +136,8 @@ void RefreshWindowInTray(HWND hwnd) {
 		NOTIFYICONDATA nid;
 		ZeroMemory(&nid, sizeof(nid));
 		nid.cbSize = NOTIFYICONDATA_V2_SIZE;
-		nid.hWnd   = _hwndHook;
-		nid.uID    = (UINT)i;
+		nid.hWnd = _hwndHook;
+		nid.uID = (UINT)i;
 		nid.uFlags = NIF_TIP;
 		GetWindowText(hwnd, nid.szTip, sizeof(nid.szTip) / sizeof(nid.szTip[0]));
 		Shell_NotifyIcon(NIM_MODIFY, &nid);
@@ -153,10 +153,10 @@ void ExecuteMenu() {
 		MessageBox(NULL, L"Error creating menu.", L"RBTray", MB_OK | MB_ICONERROR);
 		return;
 	}
-	AppendMenu(hMenu, MF_STRING, IDM_ABOUT,   L"About RBTray");
-	AppendMenu(hMenu, MF_STRING, IDM_EXIT,    L"Exit RBTray");
+	AppendMenu(hMenu, MF_STRING, IDM_ABOUT, L"About RBTray");
+	AppendMenu(hMenu, MF_STRING, IDM_EXIT, L"Exit RBTray");
 	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL); //--------------
-	AppendMenu(hMenu, MF_STRING, IDM_CLOSE,   L"Close Window");
+	AppendMenu(hMenu, MF_STRING, IDM_CLOSE, L"Close Window");
 	AppendMenu(hMenu, MF_STRING, IDM_RESTORE, L"Restore Window");
 
 	GetCursorPos(&point);
@@ -170,76 +170,76 @@ void ExecuteMenu() {
 
 BOOL CALLBACK AboutDlgProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
 	switch (Msg) {
-		case WM_CLOSE:
-			PostMessage(hWnd, WM_COMMAND, IDCANCEL, 0);
+	case WM_CLOSE:
+		PostMessage(hWnd, WM_COMMAND, IDCANCEL, 0);
+		break;
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+		case IDOK:
+			EndDialog(hWnd, TRUE);
 			break;
-		case WM_COMMAND:
-			switch (LOWORD(wParam)) {
-				case IDOK:
-					EndDialog(hWnd, TRUE);
-					break;
-				case IDCANCEL:
-					EndDialog(hWnd, FALSE);
-					break;
-			}
+		case IDCANCEL:
+			EndDialog(hWnd, FALSE);
 			break;
-		default:
-			return FALSE;
+		}
+		break;
+	default:
+		return FALSE;
 	}
 	return TRUE;
 }
 
 LRESULT CALLBACK HookWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg) {
-		case WM_COMMAND:
-			switch (LOWORD(wParam)) {
-				case IDM_RESTORE:
-					RestoreWindowFromTray(_hwndForMenu);
-					break;
-				case IDM_CLOSE:
-					CloseWindowFromTray(_hwndForMenu);
-					break;
-				case IDM_ABOUT:
-					DialogBox(_hInstance, MAKEINTRESOURCE(IDD_ABOUT), _hwndHook, (DLGPROC)AboutDlgProc);
-					break;
-				case IDM_EXIT:
-					SendMessage(_hwndHook, WM_DESTROY, 0, 0);
-					break;
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+		case IDM_RESTORE:
+			RestoreWindowFromTray(_hwndForMenu);
+			break;
+		case IDM_CLOSE:
+			CloseWindowFromTray(_hwndForMenu);
+			break;
+		case IDM_ABOUT:
+			DialogBox(_hInstance, MAKEINTRESOURCE(IDD_ABOUT), _hwndHook, (DLGPROC)AboutDlgProc);
+			break;
+		case IDM_EXIT:
+			SendMessage(_hwndHook, WM_DESTROY, 0, 0);
+			break;
+		}
+		break;
+	case WM_ADDTRAY:
+		MinimizeWindowToTray((HWND)lParam);
+		break;
+	case WM_REMTRAY:
+		RestoreWindowFromTray((HWND)lParam);
+		break;
+	case WM_REFRTRAY:
+		RefreshWindowInTray((HWND)lParam);
+		break;
+	case WM_TRAYCMD:
+		switch ((UINT)lParam) {
+		case NIN_SELECT:
+			RestoreWindowFromTray(_hwndItems[wParam]);
+			break;
+		case WM_CONTEXTMENU:
+			_hwndForMenu = _hwndItems[wParam];
+			ExecuteMenu();
+			break;
+		case WM_MOUSEMOVE:
+			RefreshWindowInTray(_hwndItems[wParam]);
+			break;
+		}
+		break;
+	case WM_DESTROY:
+		for (int i = 0; i < MAXTRAYITEMS; i++) {
+			if (_hwndItems[i]) {
+				RestoreWindowFromTray(_hwndItems[i]);
 			}
-			break;
-		case WM_ADDTRAY:
-			MinimizeWindowToTray((HWND)lParam);
-			break;
-		case WM_REMTRAY:
-			RestoreWindowFromTray((HWND)lParam);
-			break;
-		case WM_REFRTRAY:
-			RefreshWindowInTray((HWND)lParam);
-			break;
-		case WM_TRAYCMD:
-			switch ((UINT)lParam) {
-				case NIN_SELECT:
-					RestoreWindowFromTray(_hwndItems[wParam]);
-					break;
-				case WM_CONTEXTMENU:
-					_hwndForMenu = _hwndItems[wParam];
-					ExecuteMenu();
-					break;
-				case WM_MOUSEMOVE:
-					RefreshWindowInTray(_hwndItems[wParam]);
-					break;
-			}
-			break;
-		case WM_DESTROY:
-			for (int i = 0; i < MAXTRAYITEMS; i++) {
-				if (_hwndItems[i]) {
-					RestoreWindowFromTray(_hwndItems[i]);
-				}
-			}
-			UnRegisterHook();
-			FreeLibrary(_hLib);
-			PostQuitMessage(0);
-			break;
+		}
+		UnRegisterHook();
+		FreeLibrary(_hLib);
+		PostQuitMessage(0);
+		break;
 	}
 
 	if (msg == WM_TASKBAR_CREATED) {
@@ -276,15 +276,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR szCmdLine
 		MessageBox(NULL, L"Error setting hook procedure.", L"RBTray", MB_OK | MB_ICONERROR);
 		return 0;
 	}
-	wc.style         = 0;
-	wc.lpfnWndProc   = HookWndProc;
-	wc.cbClsExtra    = 0;
-	wc.cbWndExtra    = 0;
-	wc.hInstance     = hInstance;
-	wc.hIcon         = NULL;
-	wc.hCursor       = NULL;
+	wc.style = 0;
+	wc.lpfnWndProc = HookWndProc;
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.hInstance = hInstance;
+	wc.hIcon = NULL;
+	wc.hCursor = NULL;
 	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wc.lpszMenuName  = NULL;
+	wc.lpszMenuName = NULL;
 	wc.lpszClassName = NAME;
 	if (!RegisterClass(&wc)) {
 		MessageBox(NULL, L"Error creating window class", L"RBTray", MB_OK | MB_ICONERROR);
