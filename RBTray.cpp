@@ -205,7 +205,7 @@ LRESULT CALLBACK HookWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 	case WM_DESTROY:
 		for (int i = 0; i < MAXTRAYITEMS; i++) {
 			if (_hwndItems[i]) {
-				RestoreWindowFromTray(_hwndItems[i]);
+				RemoveWindowFromTray(_hwndItems[i]);
 			}
 		}
 		UnRegisterHook();
