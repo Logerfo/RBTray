@@ -138,7 +138,8 @@ void RefreshWindowInTray(HWND hwnd) {
 		nid.cbSize = NOTIFYICONDATA_V2_SIZE;
 		nid.hWnd = _hwndHook;
 		nid.uID = (UINT)i;
-		nid.uFlags = NIF_TIP;
+		nid.uFlags = NIF_TIP | NIF_ICON;
+		nid.hIcon = GetWindowIcon(hwnd);
 		GetWindowText(hwnd, nid.szTip, sizeof(nid.szTip) / sizeof(nid.szTip[0]));
 		Shell_NotifyIcon(NIM_MODIFY, &nid);
 	}
