@@ -167,27 +167,6 @@ void ExecuteMenu() {
 	DestroyMenu(hMenu);
 }
 
-BOOL CALLBACK AboutDlgProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
-	switch (Msg) {
-	case WM_CLOSE:
-		PostMessage(hWnd, WM_COMMAND, IDCANCEL, 0);
-		break;
-	case WM_COMMAND:
-		switch (LOWORD(wParam)) {
-		case IDOK:
-			EndDialog(hWnd, TRUE);
-			break;
-		case IDCANCEL:
-			EndDialog(hWnd, FALSE);
-			break;
-		}
-		break;
-	default:
-		return FALSE;
-	}
-	return TRUE;
-}
-
 LRESULT CALLBACK HookWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg) {
 	case WM_COMMAND:
