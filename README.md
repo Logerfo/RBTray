@@ -6,7 +6,7 @@ The original application hides the window and adds its icon to the system tray. 
 - The window is not hidden.
 
 ## How to use
-Start `RBTray.exe` (you might want to make it start with windows) and right click the minimize button of the window you want its icon to be shown in the system tray.  
+Start `RBTray.exe` (you might want to make it start with windows) and right click the minimize button of the window you want its icon to be shown in the system tray. You can do this for a max of 64 windows.  
 You can right click the icon to quit the application (which will remove every icon from the tray), close the window or remove only its icon from the tray.  
 You can also left click the icon to send the window to the foreground (and change the current desktop to the one which contains it, if you are on Windows 10).
 
