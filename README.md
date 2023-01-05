@@ -24,4 +24,4 @@ I believe the right way of doing this would be subscribing to an event which is 
 Currently, exiting the application is not killing its proccess.
 
 ## Alternatives
-The only alternative I found for this behavior is called [Actual Window Manger](https://www.actualtools.com/windowmanager/), but it's not free, although it has a 60 days trial. I tested it and it works perfectly. It also has some very other useful features, the tray icon is just a small feature.
+The only alternative I found for this behavior is called [Actual Window Manager](https://www.actualtools.com/windowmanager/), but it's not free, although it has a 60 days trial. I tested it and it works perfectly. It also has some very other useful features, the tray icon is just a small feature.
